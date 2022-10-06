@@ -32,31 +32,29 @@ public class Main {
     }
 
     static String convertNumToRoman (int numArabian) {
-        String[] roman = {"O", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI", "XII", "XIII", "XIV", "XV", "XVI", "XVII", "XVIII", "XIX", "XX",
-                "XXI", "XXII", "XXIII", "XXIV", "XXV", "XXVI", "XXVII", "XXVIII", "XXIX", "XXX", "XXXI", "XXXII", "XXXIII", "XXXIV", "XXXV", "XXXVI", "XXXVII", "XXXVIII", "XXXIX", "XL",
-                "XLI", "XLII", "XLIII", "XLIV", "XLV", "XLVI", "XLVII", "XLVIII", "XLIX", "L", "LI", "LII", "LIII", "LIV", "LV", "LVI", "LVII", "LVIII", "LIX", "LX",
-                "LXI", "LXII", "LXIII", "LXIV", "LXV", "LXVI", "LXVII", "LXVIII", "LXIX", "LXX",
-                "LXXI", "LXXII", "LXXIII", "LXXIV", "LXXV", "LXXVI", "LXXVII", "LXXVIII", "LXXIX", "LXXX",
-                "LXXXI", "LXXXII", "LXXXIII", "LXXXIV", "LXXXV", "LXXXVI", "LXXXVII", "LXXXVIII", "LXXXIX", "XC",
-                "XCI", "XCII", "XCIII", "XCIV", "XCV", "XCVI", "XCVII", "XCVIII", "XCIX", "C"
-        };
+        String numRoman = "";
+        if (numArabian / 10 > 0 & numArabian / 10 < 4) numRoman += "X".repeat(numArabian / 10);
+        if (numArabian / 10 == 4) numRoman += "XL";
+        if (numArabian / 10 > 4 & numArabian / 10 < 9) numRoman +="L" + "X".repeat(numArabian / 10 - 5);
+        if (numArabian / 10 == 9) numRoman += "XC";
+        if (numArabian / 10 == 10) numRoman += "C";
+        if (numArabian % 10 > 0 & numArabian % 10 < 4) numRoman += "I".repeat(numArabian % 10);
+        if (numArabian % 10 == 4) numRoman += "IV";
+        if (numArabian % 10 > 4 & numArabian % 10 < 9) numRoman +="V" + "I".repeat(numArabian % 10 - 5);
+        if (numArabian % 10 == 9) numRoman += "IX";
 
-        return roman[numArabian];
+        return numRoman;
     }
 
     public static String calc(String input) throws InputException {
-        //Scanner sc = new Scanner(System.in);
-        String userString = input;
         String [] operations = {"+", "-", "*", "/"};
         String [] arabianNumbers = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10"};
         String [] romanNumbers = {null,"I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X"};
-        String [] userArray = userString.split(" ");
-        String oper = userArray[1];
-        int a_num = 0;
-        int b_num = 0;
-        int result = 0;
-        String resultString = "Неверные данные";
+        String [] userArray = input.split(" ");
+        int result;
+        String resultString;
         if (userArray.length == 3) {
+            String oper = userArray[1];
             if (Main.indexOfString(oper, operations) >= 0) {
                 if (Main.indexOfString(userArray[0], arabianNumbers) >= 0 & Main.indexOfString(userArray[2], arabianNumbers) >= 0) {
                     result = Main.calculateTwoInts(Integer.parseInt(userArray[0]), oper, Integer.parseInt(userArray[2]));
@@ -84,11 +82,8 @@ public class Main {
         }
     }
     public static void main (String [] args) throws InputException{
-        //Тесты удалить перед сдачей весь метод main
-        /*System.out.println(Main.calc("8 + 3"));
-        System.out.println(Main.calc("VI / III"));*/
-        System.out.println(Main.calc("X * IX"));
-        //System.out.println(Main.calc("I - 1"));
+        Scanner sc = new Scanner(System.in);
+        System.out.println(Main.calc(sc.nextLine()));
     }
 }
 
